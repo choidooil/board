@@ -25,14 +25,18 @@
     </tbody>
     <a th:href ="@{/board/delete(id=${board.board_ID} )}">게시글삭제</a>
 </table>
-<div class="layout">
-    <table border="1">
+<div>
+    <table border="1" class="layout">
     <tbody>
     <form action="/board/writeCommentPro" method="post">
+        <tr>
+            <td>
             <input name="boardID" type="hidden" th:value ="${board.board_ID}">
             <input name="boardCommentUserID" type="text">
-            <textarea name ="boardCommentContent"></textarea>
-            <button type="submit">작성</button>
+            <input name ="boardCommentContent"></input>
+            <button type="submit" >작성</button>
+            </td>
+        </tr>
     </form>
     </tbody>
     </table>
@@ -45,20 +49,16 @@
             <tr>
                 <th colspan="2">댓글</th>
             </tr>
-        </thead>
-        <tbody >
+
             <tr th:each="Board_Comment : ${Board_Comment}"> <!--${}안에는 Controller의 addAttribute에서 설정한 속성명이 들어가야함.-->
-                <h th:text ="${Board_Comment.boardCommentUserID}" >제목</h>
-                <p th:text ="${Board_Comment.boardCommentContent}">내용</p>
+                <td th:text ="${Board_Comment.boardCommentUserID}" >제목</td>
+                <td th:text ="${Board_Comment.boardCommentContent}">내용</td>
             </tr>
-        </tbody>
-
-
+        </thead>
     </table>
 
 </div>
 
 
-
-            </body>
-            </html>
+</body>
+</html>

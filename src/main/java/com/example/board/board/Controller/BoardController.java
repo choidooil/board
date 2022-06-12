@@ -55,7 +55,7 @@ public class BoardController {
     public String boardWriteContentPro(Board_Comment brdc){//Entity 선언한 클래스(테이블을 클래스화)
         System.out.println(brdc);
         boardService.writeComment(brdc); //선언된 url로 Post값이 들어오면 서비스의 기능 실행.
-        return "";
+        return "redirect:/board/view?id="+brdc.getBoardID();
 
     }
 
