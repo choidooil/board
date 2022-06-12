@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세 페이지</title>
+</head>
+<style>
+    .layout{
+    width : 500px;
+    margin : 0 auto;
+    }
+
+    .layout2{
+    height :  700px;
+    }
+</style>
+<body>
+<table border="1" class="layout">
+    <tbody>
+    <td>제목</td>
+    <td th:text ="${board.board_title}" >제목</td>
+    <tr></tr>
+        <th class = "layout2">내용</th>
+        <th th:text ="${board.board_Content}">내용</th>
+    </tbody>
+    <a th:href ="@{/board/delete(id=${board.board_ID} )}">게시글삭제</a>
+</table>
+<div class="layout">
+    <table border="1">
+    <tbody>
+    <form action="/board/writeCommentPro" method="post">
+            <input name="boardID" type="hidden" th:value ="${board.board_ID}">
+            <input name="boardCommentUserID" type="text">
+            <textarea name ="boardCommentContent"></textarea>
+            <button type="submit">작성</button>
+    </form>
+    </tbody>
+    </table>
+
+</div>
+<div class="layout">
+
+    <table border="1" class="layout">
+        <thead>
+            <tr>
+                <th colspan="2">댓글</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr th:each="Board_Comment : ${Board_Comment}"> <!--${}안에는 Controller의 addAttribute에서 설정한 속성명이 들어가야함.-->
+                <h th:text ="${Board_Comment.boardCommentUserID}" >제목</h>
+                <p th:text ="${Board_Comment.boardCommentContent}">내용</p>
+            </tr>
+        </tbody>
+
+
+    </table>
+
+</div>
+
+
+
+            </body>
+            </html>
