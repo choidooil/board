@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,7 +49,7 @@ public class BoardController {
     public String boardWritePro(Board brd){//Entity 선언한 클래스(테이블을 클래스화)
         boardService.write(brd); //선언된 url로 Post값이 들어오면 서비스의 기능 실행.
 
-        return "";
+        return "redirect:/board/list";
 
     }
     @PostMapping("/board/writeCommentPro") //해당 url로 들어오는 포스트값을맵핑
@@ -64,5 +65,10 @@ public class BoardController {
         boardService.boardDelete(id);
         return "redirect:/board/list";
 
+    }
+
+    @GetMapping("/board/modify/{board_ID}") // 대괄호 안의 변수를 받으면 아래의 @PathVariable에서 Integer 형태의 id로 받음.
+    public String boardModify(@PathVariable("board_ID") Integer id){
+        return "BoardModify";
     }
 }

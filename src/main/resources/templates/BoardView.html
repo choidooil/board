@@ -24,6 +24,7 @@
         <th th:text ="${board.board_Content}">내용</th>
     </tbody>
     <a th:href ="@{/board/delete(id=${board.board_ID} )}">게시글삭제</a>
+    <a th:href ="@{/board/modify/{board_ID}(board_ID=${board.board_ID})}">게시글수정</a>
 </table>
 <div>
     <table border="1" class="layout">
