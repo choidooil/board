@@ -45,6 +45,19 @@ public class BoardController {
 
     }
 
+    @GetMapping("/board/delete")
+    public String boardDelete(Integer id){
+        boardService.boardDelete(id);
+        return "redirect:/board/list";
+
+    }
+
+    @GetMapping("/board/modify/{board_ID}") // 대괄호 안의 변수를 받으면 아래의 @PathVariable에서 Integer 형태의 id로 받음.
+    public String boardModify(Model model, @PathVariable("board_ID") Integer id){
+        model.addAttribute("board",boardService.boardView(id));
+        return "BoardModify";
+    }
+
     @PostMapping("/board/writePro") //해당 url로 들어오는 포스트값을맵핑
     public String boardWritePro(Board brd){//Entity 선언한 클래스(테이블을 클래스화)
         boardService.write(brd); //선언된 url로 Post값이 들어오면 서비스의 기능 실행.
@@ -60,15 +73,17 @@ public class BoardController {
 
     }
 
-    @GetMapping("/board/delete")
-    public String boardDelete(Integer id){
-        boardService.boardDelete(id);
+    @PostMapping("/board/Update/{board_ID}")
+    public String boardUpdate(@PathVariable("board_ID") Integer id, Board brd){
+
+        Board boardTemp = boardService.boardView(id);  //기존의 게시글 정보 임시 저장
+        boardTemp.setBoard_title(brd.getBoard_title());
+        boardTemp.setCreate_Date(brd.getCreate_Date());
+        boardTemp.setUser_ID(brd.getUser_ID());
+        boardTemp.setBoard_Content(brd.getBoard_Content());
+        System.out.println("boardid:"+boardTemp);
+        boardService.write(boardTemp); //임시
         return "redirect:/board/list";
-
     }
 
-    @GetMapping("/board/modify/{board_ID}") // 대괄호 안의 변수를 받으면 아래의 @PathVariable에서 Integer 형태의 id로 받음.
-    public String boardModify(@PathVariable("board_ID") Integer id){
-        return "BoardModify";
-    }
 }

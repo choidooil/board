@@ -23,8 +23,12 @@
         <th class = "layout2">내용</th>
         <th th:text ="${board.board_Content}">내용</th>
     </tbody>
+    <button>
     <a th:href ="@{/board/delete(id=${board.board_ID} )}">게시글삭제</a>
+    </button>
+    <button>
     <a th:href ="@{/board/modify/{board_ID}(board_ID=${board.board_ID})}">게시글수정</a>
+    </button>
 </table>
 <div>
     <table border="1" class="layout">

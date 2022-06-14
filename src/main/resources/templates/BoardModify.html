@@ -1,32 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시글 수정 페이지</title>
+    <title>게시글 수정페이지</title>
 </head>
+
 <style>
     .layout{
     width : 500px;
     margin : 0 auto;
     }
 
-    .layout2{
-    height :  700px;
+    .layout input{
+        width : 100%;
+        box-sizing : border-box;
+        margin-top : 10px;
+
+    }
+    .layout textarea{
+        width : 100%;
+        box-sizing : border-box;
+        margin-top : 10px;
+        min-height : 400px;
+
     }
 </style>
+
 <body>
-<table border="1" class="layout">
-    <tbody>
-    <td>제목</td>
-    <td th:text ="${board.board_title}" >제목</td>
-    <tr></tr>
-    <th class = "layout2">내용</th>
-    <th th:text ="${board.board_Content}">내용</th>
-    </tbody>
-</table>
+<div class="layout">
+    <form th:action="@{/board/Update/{board_ID}(board_ID=${board.board_ID})}" method="post">
+        <input name="board_title" type="text" th:value="${board.board_title}">
+        <input name="user_ID" type="text" th:value ="${board.user_ID}">
+        <input name="Create_Date" type="text" th:value ="${board.Create_Date}">
+        <textarea name ="board_Content" th:text ="${board.board_Content}"></textarea>
+        <button type="submit"> 수정 </button>
 
+    </form>
 
-
-
+</div>
 </body>
 </html>
