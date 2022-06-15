@@ -29,10 +29,14 @@
 <body>
     <div class="layout">
         <form action="/board/writePro" method="post">
-            <input name="board_title" type="text">
-            <input name="user_ID" type="text">
-            <input name="Create_Date" type="text">
-            <textarea name ="board_Content"></textarea>
+            <h>제목</h>
+            <input name="boardTitle" type="text">
+            <h>이름</h>
+            <input name="userID" type="text">
+            <h>작성일</h>
+            <input name="CreateDate" type="text" th:value ="${time}">
+            <h>내용</h>
+            <textarea name ="boardContent"></textarea>
             <button type="submit"> 작성 </button>
 
         </form>

@@ -6,6 +6,9 @@ import com.example.board.board.entity.Board_Comment_PK;
 import com.example.board.board.repository.BoardCommentRepository;
 import com.example.board.board.repository.BoardRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +30,8 @@ public class BoardService {
         boardCommentRepository.save(brdc); //선언한 레포지토리에서 상속받은 save 실행. entity값이 파라미터.
     }
     //게시글 리스트 뿌려주기
-    public List<Board> boardList(){
-        return boardRepositoy.findAll();// 반환값 List
+    public Page<Board> boardList(Pageable pageable){
+        return boardRepositoy.findAll(pageable);// 반환값 List
     }
 
     public List<Board_Comment> boardCommentList(Board_Comment_PK bcPk){

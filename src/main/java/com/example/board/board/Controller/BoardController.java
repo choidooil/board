@@ -4,13 +4,21 @@ import com.example.board.board.entity.Board;
 import com.example.board.board.entity.Board_Comment;
 import com.example.board.board.entity.Board_Comment_PK;
 import com.example.board.board.service.BoardService;
+import net.bytebuddy.TypeCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller //스프링 프레임워크의 메인.
 public class BoardController {
@@ -21,14 +29,34 @@ public class BoardController {
     //해당 서비스에는 @Repository를 사용한 메서드 들어가있고, @Repository는 @Entity를 이용한 메서드가 있음
 
     @GetMapping("/board/write") //어떤 url로 접근할지? // localhost:8080/board/write 로들어가면 BoardWrite.xml 화면을 반환.
-    public String boardWrtieForm(){
+    public String boardWrtieForm(Model model){
+        LocalDate nowTime = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formatNow = nowTime.format(formatter);
+
+
+        model.addAttribute("time",formatNow);
+
+
         return "BoardWrite";
 
     }
     @GetMapping("/board/list") //localhost:8080/board/list
-    public String boardList(Model model){
+    public String boardList(Model model,@PageableDefault(page = 0,size = 10,sort = "boardID",direction = Sort.Direction.DESC) Pageable pageable){
+                                        //페이지 디폴트셋팅 어노테이션, page는 시작페이지, size는 레코드 수, sort는 정렬기준 필드, direction은 정렬방법
 
-        model.addAttribute("list",boardService.boardList());
+        Page<Board> list = boardService.boardList(pageable);
+
+        int nowPage = list.getPageable().getPageNumber()+1; //Pageable 에서 현재페이지를 받아옴.
+        int startPage = Math.max(nowPage - 4,1); // 표시되는 시작페이지는 현재페이지 기준 -4페이지 까지, 단 1보다 작지않음.
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());// 최대 페이지는 현재페이지 기준 +5페이지 까지, 단 최대페이지보다 크지 않음.
+
+
+
+        model.addAttribute("list",list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         return "BoardList";
 
     }
@@ -52,8 +80,8 @@ public class BoardController {
 
     }
 
-    @GetMapping("/board/modify/{board_ID}") // 대괄호 안의 변수를 받으면 아래의 @PathVariable에서 Integer 형태의 id로 받음.
-    public String boardModify(Model model, @PathVariable("board_ID") Integer id){
+    @GetMapping("/board/modify/{boardID}") // 대괄호 안의 변수를 받으면 아래의 @PathVariable에서 Integer 형태의 id로 받음.
+    public String boardModify(Model model, @PathVariable("boardID") Integer id){
         model.addAttribute("board",boardService.boardView(id));
         return "BoardModify";
     }
@@ -73,14 +101,14 @@ public class BoardController {
 
     }
 
-    @PostMapping("/board/Update/{board_ID}")
-    public String boardUpdate(@PathVariable("board_ID") Integer id, Board brd){
+    @PostMapping("/board/Update/{boardID}")
+    public String boardUpdate(@PathVariable("boardID") Integer id, Board brd){
 
         Board boardTemp = boardService.boardView(id);  //기존의 게시글 정보 임시 저장
-        boardTemp.setBoard_title(brd.getBoard_title());
-        boardTemp.setCreate_Date(brd.getCreate_Date());
-        boardTemp.setUser_ID(brd.getUser_ID());
-        boardTemp.setBoard_Content(brd.getBoard_Content());
+        boardTemp.setBoardTitle(brd.getBoardTitle());
+        boardTemp.setCreateDate(brd.getCreateDate());
+        boardTemp.setUserID(brd.getUserID());
+        boardTemp.setBoardContent(brd.getBoardContent());
         System.out.println("boardid:"+boardTemp);
         boardService.write(boardTemp); //임시
         return "redirect:/board/list";

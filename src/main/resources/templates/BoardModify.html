@@ -29,10 +29,14 @@
 <body>
 <div class="layout">
     <form th:action="@{/board/Update/{board_ID}(board_ID=${board.board_ID})}" method="post">
-        <input name="board_title" type="text" th:value="${board.board_title}">
-        <input name="user_ID" type="text" th:value ="${board.user_ID}">
-        <input name="Create_Date" type="text" th:value ="${board.Create_Date}">
-        <textarea name ="board_Content" th:text ="${board.board_Content}"></textarea>
+        <h>제목</h>
+        <input name="boardTitle" type="text" th:value="${board.boardTitle}">
+        <h>이름</h>
+        <input name="userID" type="text" th:value ="${board.userID}">
+        <h>작성일</h>
+        <input name="CreateDate" type="text" th:value ="${board.CreateDate}">
+        <h>내용</h>
+        <textarea name ="boardContent" th:text ="${board.boardContent}"></textarea>
         <button type="submit"> 수정 </button>
 
     </form>

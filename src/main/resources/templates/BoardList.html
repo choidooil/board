@@ -24,10 +24,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="board : ${list}">
-                    <td th:text="${board.board_ID}">1</td>
+                <tr th:each="board : ${list}" class="layout">
+                    <td th:text="${board.boardID}">1</td>
                     <td>
-                        <a th:text="${board.board_title}" th:href="@{/board/view(id=${board.board_ID})}"></a> <!--<a>를 해야 클릭이 가능해짐.-->
+                        <a th:text="${board.boardTitle}" th:href="@{/board/view(id=${board.boardID})}"></a> <!--<a>를 해야 클릭이 가능해짐.-->
                     </td> <!--링크를 걸어주는 역할. 타이틀 클릭시 /board/view로 이동 /localhost:8080/board/view?id=board.board_ID-->
 
                 </tr>
@@ -35,6 +35,10 @@
             </tbody>
 
         </table>
+        <th:block th:each="page : ${#numbers.sequence(startPage,endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/board/list(page=${page-1})}" th:text="${page}"></a> <!--받은page값 -1로 이동. (pageable은 0부터 시작) -->
+            <strong th:if="${page == nowPage}" th:text="${page}" style="color:gray "></strong> <!--반복값이 현재페이지값과 동일시 회색색상변경 + 클릭불가능하게 변경-->
+        </th:block>
 
     </div>
 

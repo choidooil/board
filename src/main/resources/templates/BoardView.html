@@ -18,16 +18,16 @@
 <table border="1" class="layout">
     <tbody>
     <td>제목</td>
-    <td th:text ="${board.board_title}" >제목</td>
+    <td th:text ="${board.boardTitle}" >제목</td>
     <tr></tr>
         <th class = "layout2">내용</th>
-        <th th:text ="${board.board_Content}">내용</th>
+        <th th:text ="${board.boardContent}">내용</th>
     </tbody>
     <button>
-    <a th:href ="@{/board/delete(id=${board.board_ID} )}">게시글삭제</a>
+    <a th:href ="@{/board/delete(id=${board.boardID} )}">게시글삭제</a>
     </button>
     <button>
-    <a th:href ="@{/board/modify/{board_ID}(board_ID=${board.board_ID})}">게시글수정</a>
+    <a th:href ="@{/board/modify/{boardID}(boardID=${board.boardID})}">게시글수정</a>
     </button>
 </table>
 <div>
