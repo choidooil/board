@@ -80,6 +80,7 @@ public class BoardController {
 
     }
 
+
     @GetMapping("/board/modify/{boardID}") // 대괄호 안의 변수를 받으면 아래의 @PathVariable에서 Integer 형태의 id로 받음.
     public String boardModify(Model model, @PathVariable("boardID") Integer id){
         model.addAttribute("board",boardService.boardView(id));

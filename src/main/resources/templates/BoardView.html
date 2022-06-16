@@ -16,6 +16,19 @@
 </style>
 <body>
 <table border="1" class="layout">
+
+    <thead>
+    <button>
+        <a th:href ="@{/board/delete(id=${board.boardID} )}">게시글삭제</a>
+    </button>
+    <button>
+        <a th:href ="@{/board/modify/{boardID}(boardID=${board.boardID})}">게시글수정</a>
+    </button>
+    <button>
+        <a th:href="@{/board/list}">목록</a>
+    </button>
+    </thead>
+
     <tbody>
     <td>제목</td>
     <td th:text ="${board.boardTitle}" >제목</td>
@@ -23,12 +36,6 @@
         <th class = "layout2">내용</th>
         <th th:text ="${board.boardContent}">내용</th>
     </tbody>
-    <button>
-    <a th:href ="@{/board/delete(id=${board.boardID} )}">게시글삭제</a>
-    </button>
-    <button>
-    <a th:href ="@{/board/modify/{boardID}(boardID=${board.boardID})}">게시글수정</a>
-    </button>
 </table>
 <div>
     <table border="1" class="layout">
@@ -36,7 +43,7 @@
     <form action="/board/writeCommentPro" method="post">
         <tr>
             <td>
-            <input name="boardID" type="hidden" th:value ="${board.board_ID}">
+            <input name="boardID" type="hidden" th:value ="${board.boardID}">
             <input name="boardCommentUserID" type="text">
             <input name ="boardCommentContent"></input>
             <button type="submit" >작성</button>

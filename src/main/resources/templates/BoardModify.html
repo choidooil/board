@@ -5,6 +5,7 @@
     <title>게시글 수정페이지</title>
 </head>
 
+
 <style>
     .layout{
     width : 500px;
@@ -28,7 +29,7 @@
 
 <body>
 <div class="layout">
-    <form th:action="@{/board/Update/{board_ID}(board_ID=${board.board_ID})}" method="post">
+    <form th:action="@{/board/Update/{boardID}(boardID=${board.boardID})}" method="post">
         <h>제목</h>
         <input name="boardTitle" type="text" th:value="${board.boardTitle}">
         <h>이름</h>
@@ -38,6 +39,9 @@
         <h>내용</h>
         <textarea name ="boardContent" th:text ="${board.boardContent}"></textarea>
         <button type="submit"> 수정 </button>
+        <button>
+            <a th:href="@{/board/view/(id=${board.boardID})}">취소</a>
+        </button>
 
     </form>
 
